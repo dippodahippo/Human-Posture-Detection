@@ -4,8 +4,10 @@ import numpy as np
 import tensorflow as tf
 import pyduinointegr.pyduino_connection as pyd
 
+tempPort = 6
+
 pyd.show_ports()
-port = pyd.select_port(6)
+port = pyd.select_port(tempPort)
 pyd.open_port(port)
 
 def slouch():
