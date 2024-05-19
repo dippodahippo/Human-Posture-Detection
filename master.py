@@ -46,7 +46,7 @@ def slouch():
                 pyd.send_data(0)
             else:
                 text = "Straight"
-                color = (0, 255, 0) 
+                color = (0, 255, 0)
                 pyd.send_data(1)
 
             cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
@@ -56,9 +56,8 @@ def slouch():
             break
     cap.release()
     cv2.destroyAllWindows()
-    pyd.close_port()
 def yogapose():
-    
+
     model = tf.keras.models.load_model("yoga_pose_model")
 
     mp_pose = mp.solutions.pose
@@ -184,7 +183,6 @@ def yogapose():
             cv2.imshow('Yoga Pose Detection', processed_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-        pyd.close_port()
         cap.release()
         cv2.destroyAllWindows()
 
@@ -287,20 +285,20 @@ def gympose():
             cv2.imshow('Gym Pose Detection', processed_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-        pyd.close_port()
         cap.release()
         cv2.destroyAllWindows()
 
     if __name__ == "__main__":
         main()
 
-inp = int(input(""))
-if inp==1:
-    slouch()
-elif inp==2:
-    yogapose()
-elif inp==3:
-    gympose()
-else:
-    pass
+if __name__ == "__main__":
+    inp = int(input(""))
+    if inp==1:
+        slouch()
+    elif inp==2:
+        yogapose()
+    elif inp==3:
+        gympose()
+    else:
+        pass
 pyd.close_port()
