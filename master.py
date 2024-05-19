@@ -1,18 +1,19 @@
-# this is the port that will be used for now. PLease change it depending on which port you're using
-tempPort = 4
+import mediapipe as mp
+import cv2
+import numpy as np
+import tensorflow as tf
+import pyduinointegr.pyduino_connection as pyd
 
-inp = int(input("Enter your choice. 1 for slouch detection, 2 for yoga pose detection, 3 for gym pose detection."))
-if inp == 1:
-    import cv2
-    import mediapipe as mp
-    import pyduinointegr.pyduino_connection as pyd
+tempPort = 6
+
+pyd.show_ports()
+port = pyd.select_port(tempPort)
+pyd.open_port(port)
+
+def slouch():
     mp_face_mesh = mp.solutions.face_mesh
     face_mesh = mp_face_mesh.FaceMesh()
-    
-    pyd.show_ports()
-    port = pyd.select_port(tempPort)
-    pyd.open_port(port)
-    
+
     cap = cv2.VideoCapture(0)
 
     reference_line = 0 
@@ -56,18 +57,8 @@ if inp == 1:
     cap.release()
     cv2.destroyAllWindows()
     pyd.close_port()
+def yogapose():
     
-elif inp == 2:
-    import mediapipe as mp
-    import cv2
-    import numpy as np
-    import tensorflow as tf
-    import pyduinointegr.pyduino_connection as pyd
-
-    pyd.show_ports()
-    port = pyd.select_port(tempPort)
-    pyd.open_port(port)
-
     model = tf.keras.models.load_model("yoga_pose_model")
 
     mp_pose = mp.solutions.pose
@@ -199,17 +190,7 @@ elif inp == 2:
 
     if __name__ == "__main__":
         main()
-
-elif inp == 3:
-    import mediapipe as mp
-    import cv2
-    import numpy as np
-    import tensorflow as tf
-    import pyduinointegr.pyduino_connection as pyd
-
-    pyd.show_ports()
-    port = pyd.select_port(tempPort)
-    pyd.open_port(port)
+def gympose():
 
     model = tf.keras.models.load_model("gym_pose_model")
 
@@ -271,7 +252,6 @@ elif inp == 3:
         
         image_height, image_width, _ = image.shape
         
-        # Draw the keypoints on the image
         for landmark in landmarks.landmark:
             x = int(landmark.x * image_width)
             y = int(landmark.y * image_height)
@@ -314,7 +294,13 @@ elif inp == 3:
     if __name__ == "__main__":
         main()
 
+inp = int(input(""))
+if inp==1:
+    slouch()
+elif inp==2:
+    yogapose()
+elif inp==3:
+    gympose()
 else:
-    print("Enter a valid option.")
-
+    pass
 pyd.close_port()
