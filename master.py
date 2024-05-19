@@ -1,3 +1,6 @@
+# added temp port, use this to assign port number
+tempPort = 6
+
 inp = int(input("Enter your choice. 1 for slouch detection, 2 for yoga pose detection, 3 for gym pose detection."))
 if inp == 1:
     import cv2
@@ -7,7 +10,7 @@ if inp == 1:
     face_mesh = mp_face_mesh.FaceMesh()
     
     pyd.show_ports()
-    port = pyd.select_port(6)
+    port = pyd.select_port(tempPort)
     pyd.open_port(port)
     
     cap = cv2.VideoCapture(0)
@@ -62,7 +65,7 @@ elif inp == 2:
     import pyduinointegr.pyduino_connection as pyd
 
     pyd.show_ports()
-    port = pyd.select_port(6)
+    port = pyd.select_port(tempPort)
     pyd.open_port(port)
 
     model = tf.keras.models.load_model("yoga_pose_model")
@@ -205,7 +208,7 @@ elif inp == 3:
     import pyduinointegr.pyduino_connection as pyd
 
     pyd.show_ports()
-    port = pyd.select_port(6)
+    port = pyd.select_port(tempPort)
     pyd.open_port(port)
 
     model = tf.keras.models.load_model("gym_pose_model")
