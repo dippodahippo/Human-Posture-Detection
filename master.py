@@ -1,3 +1,4 @@
+# this is the port that will be used for now. PLease change it depending on which port you're using
 tempPort = 4
 
 inp = int(input("Enter your choice. 1 for slouch detection, 2 for yoga pose detection, 3 for gym pose detection."))
