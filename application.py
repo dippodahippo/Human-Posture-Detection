@@ -6,7 +6,7 @@ from pyglet import font
 HEIGHT = 800
 WIDTH = 800
 FRAME_WIDTH = 750
-FRAME_HEIGHT = 400
+FRAME_HEIGHT = 100
 TEXT_FRAME_HEIGHT = 300
 LIGHT_BLUE = "#C6DEF2"
 BLUE = "#92BEE3"
@@ -28,6 +28,7 @@ app.geometry(f"{WIDTH}x{HEIGHT}")
 # setting up the font
 headerFont = CTkFont(family="Bebas Neue", size=50, weight="bold")
 descFont = CTkFont(family="Bebas Neue", size=20)
+buttonFont = CTkFont(family="Bebas Neue", size=25)
 
 # setting up the frame
 
@@ -35,9 +36,17 @@ textFrame = CTkFrame(master=app, width=FRAME_WIDTH, height=TEXT_FRAME_HEIGHT, fg
 textFrame.pack(expand=True)
 textFrame.place(relx=0.5, rely=0.225, anchor=CENTER)
 
-btnFrame = CTkFrame(master=app, width=FRAME_WIDTH, height=FRAME_HEIGHT, fg_color=LIGHT_BLUE)
-btnFrame.pack(expand=True)
-btnFrame.place(relx=0.5, rely=0.7, anchor=CENTER)
+btnFrame1 = CTkFrame(master=app, width=FRAME_WIDTH, height=FRAME_HEIGHT, fg_color=LIGHT_BLUE)
+btnFrame1.pack(expand=True)
+btnFrame1.place(relx=0.5, rely=0.55, anchor=CENTER)
+
+btnFrame2 = CTkFrame(master=app, width=FRAME_WIDTH, height=FRAME_HEIGHT, fg_color=BLUE)
+btnFrame2.pack(expand=True)
+btnFrame2.place(relx=0.5, rely=0.7, anchor=CENTER)
+
+btnFrame3 = CTkFrame(master=app, width=FRAME_WIDTH, height=FRAME_HEIGHT, fg_color=DARK_BLUE)
+btnFrame3.pack(expand=True)
+btnFrame3.place(relx=0.5, rely=0.85, anchor=CENTER)
 # functions
 
 def button_clicked(num):
@@ -53,14 +62,14 @@ desc.place(relx=0.5, rely=0.6, anchor=CENTER)
 
 
 # adding the buttons
-button1 = CTkButton(master=btnFrame, text="Posture Detection", command=lambda: button_clicked(1))
+button1 = CTkButton(master=btnFrame1, text="Posture Detection", font=buttonFont, command=lambda: button_clicked(1))
 button1.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-button2 = CTkButton(master=btnFrame, text="Yoga Pose Detection", command=lambda: button_clicked(2))
-button2.place(relx=0.25, rely=0.5, anchor=CENTER)
+button2 = CTkButton(master=btnFrame2, text="Yoga Pose Detection", font=buttonFont, command=lambda: button_clicked(2))
+button2.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-button3 = CTkButton(master=btnFrame, text="Gym Pose Detection", command=lambda: button_clicked(3))
-button3.place(relx=0.75, rely=0.5, anchor=CENTER)
+button3 = CTkButton(master=btnFrame3, text="Gym Pose Detection", font=buttonFont, command=lambda: button_clicked(3))
+button3.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 if __name__ == "__main__":
     app.mainloop()
