@@ -1,7 +1,7 @@
 from customtkinter import *
 from pyglet import font
 from PIL import Image
-# import master as m
+import master as m
 
 # variables
 HEIGHT = 800
@@ -35,6 +35,20 @@ buttonFont = CTkFont(family="Bebas Neue", size=25)
 bgImage = Image.open("./images/MountainsECS.jpg")
 background = CTkImage(light_image=bgImage,
                       dark_image=bgImage)
+
+slouchImage = Image.open("./images/slouch.jpeg")
+slouchImg = CTkImage(light_image=slouchImage,
+                     dark_image=slouchImage)
+
+yogaImage = Image.open("./images/yogaPose.jpg")
+yogaImg = CTkImage(light_image=yogaImage,
+                   dark_image=yogaImage)
+
+gymImage = Image.open("./images/GymPose.jpg")
+gymImg = CTkImage(light_image=gymImage,
+                  dark_image=gymImage)
+
+
 # functions
 
 def button_clicked(num):
@@ -74,18 +88,27 @@ btnFrame3.place(relx=0.5, rely=0.85, anchor=CENTER)
 heading = CTkLabel(master=textFrame, text="Human Posture Detection", font=headerFont)
 heading.place(relx=0.5, rely=0.2, anchor=CENTER)
 
-desc = CTkLabel(master=textFrame, text=desc_text, wraplength=600, font=descFont)
+desc = CTkLabel(master=textFrame, text=desc_text, wraplength=FRAME_WIDTH - 50, font=descFont)
 desc.place(relx=0.5, rely=0.6, anchor=CENTER)
 
 
-# adding the buttons
-button1 = CTkButton(master=btnFrame1, text="Posture Detection", font=buttonFont, command=lambda: button_clicked(1))
+# adding the buttons and their backgrounds
+slouchImg.configure(size=(FRAME_WIDTH, FRAME_HEIGHT + 200))
+bgLabel1 = CTkLabel(master=btnFrame1, text="", image=slouchImg)
+bgLabel1.place(relx=0.5, rely=1.4, anchor=CENTER)
+button1 = CTkButton(master=btnFrame1, text="Posture Detection", font=buttonFont, command=m.slouch)
 button1.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-button2 = CTkButton(master=btnFrame2, text="Yoga Pose Detection", font=buttonFont, command=lambda: button_clicked(2))
+yogaImg.configure(size=(FRAME_WIDTH, FRAME_HEIGHT + 400))
+bgLabel2 = CTkLabel(master=btnFrame2, text="", image=yogaImg)
+bgLabel2.place(relx=0.5, rely=1, anchor=CENTER)
+button2 = CTkButton(master=btnFrame2, text="Yoga Pose Detection", font=buttonFont, command=m.yogapose)
 button2.place(relx=0.5, rely=0.5, anchor=CENTER)
 
-button3 = CTkButton(master=btnFrame3, text="Gym Pose Detection", font=buttonFont, command=lambda: button_clicked(3))
+gymImg.configure(size=(FRAME_WIDTH, FRAME_HEIGHT + 200))
+bgLabel3 = CTkLabel(master=btnFrame3, text="", image=gymImg)
+bgLabel3.place(relx=0.5, rely=0.5, anchor=CENTER)
+button3 = CTkButton(master=btnFrame3, text="Gym Pose Detection", font=buttonFont, command=m.gympose)
 button3.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 if __name__ == "__main__":
