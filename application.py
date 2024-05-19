@@ -1,5 +1,6 @@
 from customtkinter import *
 from pyglet import font
+from PIL import Image
 # import master as m
 
 # variables
@@ -30,6 +31,26 @@ headerFont = CTkFont(family="Bebas Neue", size=50, weight="bold")
 descFont = CTkFont(family="Bebas Neue", size=20)
 buttonFont = CTkFont(family="Bebas Neue", size=25)
 
+# setting up images
+bgImage = Image.open("./images/MountainsECS.jpg")
+background = CTkImage(light_image=bgImage,
+                      dark_image=bgImage)
+# functions
+
+def button_clicked(num):
+    print(f"Button {num} clicked")
+
+
+def bg_resizer(e):
+    if e.widget is app:
+        i = CTkImage(bgImage, size=(e.width, e.height))
+        bg_label.configure(text="", image=i)
+
+# adding the background label
+bg_label = CTkLabel(master=app, text="", image=background)
+bg_label.place(relx=0, rely=0)
+
+
 # setting up the frame
 
 textFrame = CTkFrame(master=app, width=FRAME_WIDTH, height=TEXT_FRAME_HEIGHT, fg_color=DARK_BLUE)
@@ -47,10 +68,6 @@ btnFrame2.place(relx=0.5, rely=0.7, anchor=CENTER)
 btnFrame3 = CTkFrame(master=app, width=FRAME_WIDTH, height=FRAME_HEIGHT, fg_color=DARK_BLUE)
 btnFrame3.pack(expand=True)
 btnFrame3.place(relx=0.5, rely=0.85, anchor=CENTER)
-# functions
-
-def button_clicked(num):
-    print(f"Button {num} clicked")
 
 
 # adding the labels
@@ -72,4 +89,5 @@ button3 = CTkButton(master=btnFrame3, text="Gym Pose Detection", font=buttonFont
 button3.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 if __name__ == "__main__":
+    app.bind("<Configure>", bg_resizer)
     app.mainloop()
