@@ -1,8 +1,7 @@
+import threading
 from customtkinter import *
 from pyglet import font
 from PIL import Image
-import master as m
-
 # variables
 HEIGHT = 800
 WIDTH = 800
@@ -92,12 +91,17 @@ heading.place(relx=0.5, rely=0.2, anchor=CENTER)
 desc = CTkLabel(master=textFrame, text=desc_text, wraplength=FRAME_WIDTH - 50, font=descFont, justify="left")
 desc.place(relx=0.5, rely=0.6, anchor=CENTER)
 
-
+def runslouch():
+    s.main()
+def runyoga():
+    y.main()
+def rungym():
+    g.main()
 # adding the buttons and their backgrounds
 slouchImg.configure(size=(FRAME_WIDTH, FRAME_HEIGHT + 200))
 bgLabel1 = CTkLabel(master=btnFrame1, text="", image=slouchImg)
 bgLabel1.place(relx=0.5, rely=1.4, anchor=CENTER)
-button1 = CTkButton(master=btnFrame1, text="Posture Detection", font=buttonFont, text_color="black", fg_color=LIGHT_BLUE, command=m.slouch, hover_color=DARK_BLUE)
+button1 = CTkButton(master=btnFrame1, text="Posture Detection", font=buttonFont, text_color="black", fg_color=LIGHT_BLUE, command = m.slouch, hover_color=DARK_BLUE)
 button1.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 yogaImg.configure(size=(FRAME_WIDTH, FRAME_HEIGHT + 400))
