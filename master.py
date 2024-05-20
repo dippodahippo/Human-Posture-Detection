@@ -1,19 +1,14 @@
-import mediapipe as mp
-import cv2
-import numpy as np
-import tensorflow as tf
-import pyduinointegr.pyduino_connection as pyd
-
-tempPort = 6
-
-pyd.show_ports()
-port = pyd.select_port(tempPort)
-pyd.open_port(port)
-
 def slouch():
+    import cv2
+    import mediapipe as mp
+    import pyduinointegr.pyduino_connection as pyd
     mp_face_mesh = mp.solutions.face_mesh
     face_mesh = mp_face_mesh.FaceMesh()
-
+    
+    pyd.show_ports()
+    port = pyd.select_port(6)
+    pyd.open_port(port)
+    
     cap = cv2.VideoCapture(0)
 
     reference_line = 0 
@@ -46,7 +41,7 @@ def slouch():
                 pyd.send_data(0)
             else:
                 text = "Straight"
-                color = (0, 255, 0)
+                color = (0, 255, 0) 
                 pyd.send_data(1)
 
             cv2.putText(frame, text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
@@ -56,7 +51,18 @@ def slouch():
             break
     cap.release()
     cv2.destroyAllWindows()
+    pyd.close_port()
+    
 def yogapose():
+    import mediapipe as mp
+    import cv2
+    import numpy as np
+    import tensorflow as tf
+    import pyduinointegr.pyduino_connection as pyd
+
+    pyd.show_ports()
+    port = pyd.select_port(6)
+    pyd.open_port(port)
 
     model = tf.keras.models.load_model("yoga_pose_model")
 
@@ -88,7 +94,7 @@ def yogapose():
         return keypoints is not None and len(keypoints) == 33
 
     def smooth_predictions(current_prediction):
-        global prev_prediction
+        nonlocal prev_prediction
         smoothed_prediction = smoothing_factor * current_prediction + (1 - smoothing_factor) * prev_prediction
         prev_prediction = smoothed_prediction
         return smoothed_prediction
@@ -172,7 +178,6 @@ def yogapose():
                 cv2.putText(image, accuracy_text, (10, y_coordinate), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
         return image
 
-
     def main():
         cap = cv2.VideoCapture(0)
         while cap.isOpened():
@@ -183,12 +188,23 @@ def yogapose():
             cv2.imshow('Yoga Pose Detection', processed_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
+        pyd.close_port()
         cap.release()
         cv2.destroyAllWindows()
 
     if __name__ == "__main__":
         main()
+
 def gympose():
+    import mediapipe as mp
+    import cv2
+    import numpy as np
+    import tensorflow as tf
+    import pyduinointegr.pyduino_connection as pyd
+
+    pyd.show_ports()
+    port = pyd.select_port(6)
+    pyd.open_port(port)
 
     model = tf.keras.models.load_model("gym_pose_model")
 
@@ -220,7 +236,7 @@ def gympose():
         return keypoints is not None and len(keypoints) == 33
 
     def smooth_predictions(current_prediction):
-        global prev_prediction
+        nonlocal prev_prediction
         if prev_prediction.shape != current_prediction.shape:
             prev_prediction = np.zeros_like(current_prediction)
         smoothed_prediction = smoothing_factor * current_prediction + (1 - smoothing_factor) * prev_prediction
@@ -273,7 +289,6 @@ def gympose():
                 y_coordinate = 30 + selected_indices.index(i) * line_spacing
                 cv2.putText(image, accuracy_text, (10, y_coordinate), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
         return image
-    
 
     def main():
         cap = cv2.VideoCapture(0)
@@ -285,20 +300,19 @@ def gympose():
             cv2.imshow('Gym Pose Detection', processed_frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
+        pyd.close_port()
         cap.release()
         cv2.destroyAllWindows()
 
     if __name__ == "__main__":
         main()
+inp = int(input(""))
+if inp == 1:
+    slouch()
+elif inp == 2:
+    yogapose()
+elif inp == 3:
+    gympose()
+else:
+    pass
 
-if __name__ == "__main__":
-    inp = int(input(""))
-    if inp==1:
-        slouch()
-    elif inp==2:
-        yogapose()
-    elif inp==3:
-        gympose()
-    else:
-        pass
-pyd.close_port()
